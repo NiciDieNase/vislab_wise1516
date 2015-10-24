@@ -1,4 +1,4 @@
-package de.hskarlsruhe.vislab1;
+package de.hska.iwi.vislab.lab1;
 
 import static org.testng.Assert.assertEquals;
 
@@ -23,7 +23,7 @@ public class FibonacciTest {
 		Endpoint ep = Endpoint.publish(url, new FibonacciServiceImpl());
 
 		Service service = Service.create(new URL(url + "?wsdl"), new QName(
-				"http://ws.ref.lab1.vism.hska.de/",
+				"http://ws.example.lab1.vislab.iwi.hska.de/",
 				"FibonacciServiceImplService"));
 
 		FibonacciService fibonacciService = service
