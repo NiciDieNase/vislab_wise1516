@@ -8,22 +8,22 @@ import javax.xml.namespace.QName;
 import javax.xml.ws.Endpoint;
 import javax.xml.ws.Service;
 
+import de.hska.iwi.vislab.lab1.fibonacci.FibonacciService;
+import de.hska.iwi.vislab.lab1.fibonacci.FibonacciServiceImpl;
 import org.testng.annotations.Test;
 
-import de.hska.vism.lab1.ref.ws.FibonacciService;
-import de.hska.vism.lab1.ref.ws.FibonacciServiceImpl;
 
 public class FibonacciTest {
 
 	@Test
 	public void testGetFibonacci() throws Exception {
 
-		String url = "http://localhost:4434/fibonacciservice";
+		String url = "http://localhost:4435/fibonacciservice";
 
 		Endpoint ep = Endpoint.publish(url, new FibonacciServiceImpl());
 
 		Service service = Service.create(new URL(url + "?wsdl"), new QName(
-				"http://ws.example.lab1.vislab.iwi.hska.de/",
+				"http://fibonacci.lab1.vislab.iwi.hska.de/",
 				"FibonacciServiceImplService"));
 
 		FibonacciService fibonacciService = service
