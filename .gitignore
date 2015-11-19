@@ -9,5 +9,6 @@ buildNumber.properties
 .classpath
 .project
 .settings/
+.DS_Store
 .idea
 *.iml
