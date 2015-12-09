@@ -18,3 +18,5 @@ public class FibonacciServiceImpl implements FibonacciService{
 		}
 	}
 }
+/* beschreibung WSDL 03-WEbServices, Folie 25
+ */

@@ -17,4 +17,3 @@ public class HalloWeltService
       return "<html><title>HelloWorld</title><body><h2>Html: Hallo " + name + "</h2></body></html>";
    }
 }
-
