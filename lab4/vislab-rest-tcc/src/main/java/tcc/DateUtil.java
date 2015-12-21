@@ -18,6 +18,10 @@ public class DateUtil {
 		GregorianCalendar ncal = new GregorianCalendar();
 		ncal.set(GregorianCalendar.YEAR, cal.get(GregorianCalendar.YEAR));
 		ncal.set(GregorianCalendar.DAY_OF_YEAR, cal.get(GregorianCalendar.DAY_OF_YEAR));
+		ncal.set(GregorianCalendar.HOUR, 0);
+		ncal.set(GregorianCalendar.MINUTE, 0);
+		ncal.set(GregorianCalendar.SECOND, 0);
+		ncal.set(GregorianCalendar.MILLISECOND, 0);
 		return ncal.getTimeInMillis();
 	}
 
