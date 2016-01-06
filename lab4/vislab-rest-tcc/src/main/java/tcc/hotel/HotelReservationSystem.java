@@ -40,10 +40,10 @@ public class HotelReservationSystem {
 	private Timer timer = new Timer();
 
 	// Maximum number of bookings per day
-	private static final int MAXBOOKINGS = 10;
+	public static final int MAXBOOKINGS = 10;
 
 	// Duration for confirming a reservation
-	private static final int LEASE = 2 * 60 * 1000; // 1 minute in millis
+	public static final int LEASE = 2 * 60 * 1000; // 1 minute in millis
 
 	/**
 	 * Reservation records
@@ -94,7 +94,7 @@ public class HotelReservationSystem {
 	 * Create a new reservation
 	 */
 	public HotelReservation createReservation(String name, String hotel, long date) throws BookingException {
-		long normdate = DateUtil.normalize(date);
+		long normDate = DateUtil.normalize(date);
 		int bookings = 1;
 
 		lock.lock();
@@ -102,13 +102,13 @@ public class HotelReservationSystem {
 
 			for (Iterator<HotelReservation> iterator = reservations.values().iterator(); iterator.hasNext();) {
 				HotelReservation res = (HotelReservation) iterator.next();
-				if (res.getBookingDate() == normdate && res.hotel.equals(hotel)) {
+				if (res.getBookingDate() == normDate && res.hotel.equals(hotel)) {
 					bookings += 1;
 				}
 			}
 
 			if (bookings < MAXBOOKINGS) {
-				HotelReservation reservation = new HotelReservation(name, hotel, date);
+				HotelReservation reservation = new HotelReservation(name, hotel, normDate);
 				reservations.put(reservation.id, reservation);
 
 				return reservation;

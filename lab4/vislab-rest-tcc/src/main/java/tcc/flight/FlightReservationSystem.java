@@ -40,10 +40,10 @@ public class FlightReservationSystem {
 	private Timer timer = new Timer();
 
 	// Maximum number of bookings per day
-	private static final int MAXBOOKINGS = 20;
+	public static final int MAXBOOKINGS = 20;
 
 	// Duration for confirming a reservation
-	private static final int LEASE = 1 * 60 * 1000; // 1 minute in millis
+	public static final int LEASE = 1 * 60 * 1000; // 1 minute in millis
 
 	/**
 	 * Reservation records
@@ -99,7 +99,7 @@ public class FlightReservationSystem {
 	 */
 	public FlightReservation createReservation(String name, String airline, String from, String to, long date)
 			throws BookingException {
-		long normdate = DateUtil.normalize(date);
+		long normDate = DateUtil.normalize(date);
 		int bookings = 1;
 
 		lock.lock();
@@ -107,14 +107,14 @@ public class FlightReservationSystem {
 
 			for (Iterator<FlightReservation> iterator = reservations.values().iterator(); iterator.hasNext();) {
 				FlightReservation res = (FlightReservation) iterator.next();
-				if (res.getBookingDate() == normdate && res.from.equals(from) && res.to.equals(to)
+				if (res.getBookingDate() == normDate && res.from.equals(from) && res.to.equals(to)
 						&& res.airline.equals(airline)) {
 					bookings += 1;
 				}
 			}
 
 			if (bookings < MAXBOOKINGS) {
-				FlightReservation reservation = new FlightReservation(name, airline, from, to, date);
+				FlightReservation reservation = new FlightReservation(name, airline, from, to, normDate);
 				reservations.put(reservation.id, reservation);
 
 				return reservation;
