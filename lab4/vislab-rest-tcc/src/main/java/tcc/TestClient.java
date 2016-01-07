@@ -67,6 +67,14 @@ public class TestClient {
 			HotelReservationDoc outputHotel = responseHotel.getEntity(HotelReservationDoc.class);
 			System.out.println("Output from Server: " + outputHotel);
 
+			if (responseFlight.getStatus() == 200 && responseHotel.getStatus() == 200) {
+				//System.out.println(outputFlight.getUrl());
+				WebResource webResourceFlightConfirm = client.resource(outputFlight.getUrl());
+				webResourceFlightConfirm.put();
+				WebResource webResourceHotelConfirm = client.resource(outputHotel.getUrl());
+				webResourceHotelConfirm.put();
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
