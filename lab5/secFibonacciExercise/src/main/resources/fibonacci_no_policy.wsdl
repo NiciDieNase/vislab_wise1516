@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions
+	xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd"
+	xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsp1_2="http://schemas.xmlsoap.org/ws/2004/09/policy"
+	xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:tns="http://ws.ex.lab5.vism.hska.de/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://ws.ex.lab5.vism.hska.de/"
+	name="FibonacciServiceImplService">
+	<types>
+		<xsd:schema>
+			<xsd:import namespace="http://ws.ex.lab5.vism.hska.de/"
+				schemaLocation="./fibonacci.xsd"></xsd:import>
+		</xsd:schema>
+	</types>
+	<message name="getFibonacci">
+		<part name="parameters" element="tns:getFibonacci"></part>
+	</message>
+	<message name="getFibonacciResponse">
+		<part name="parameters" element="tns:getFibonacciResponse"></part>
+	</message>
+	<portType name="FibonacciService">
+		<operation name="getFibonacci">
+			<input
+				wsam:Action="http://ws.ex.lab5.vism.hska.de/FibonacciService/getFibonacciRequest"
+				message="tns:getFibonacci"></input>
+			<output
+				wsam:Action="http://ws.ex.lab5.vism.hska.de/FibonacciService/getFibonacciResponse"
+				message="tns:getFibonacciResponse"></output>
+		</operation>
+	</portType>
+	<binding name="FibonacciServiceImplPortBinding" type="tns:FibonacciService">
+		<soap:binding transport="http://schemas.xmlsoap.org/soap/http"
+			style="document"></soap:binding>
+		<operation name="getFibonacci">
+			<soap:operation soapAction=""></soap:operation>
+			<input>
+				<soap:body use="literal"></soap:body>
+			</input>
+			<output>
+				<soap:body use="literal"></soap:body>
+			</output>
+		</operation>
+	</binding>
+	<service name="FibonacciServiceImplService">
+		<port name="FibonacciServiceImplPort" binding="tns:FibonacciServiceImplPortBinding">
+			<soap:address location="http://localhost:9001/SoapContext/FibonacciServiceImplPort"></soap:address>
+		</port>
+	</service>
+</definitions>
