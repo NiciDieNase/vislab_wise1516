@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:tns="http://ws.ex.lab5.vism.hska.de/"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0"
+	targetNamespace="http://ws.ex.lab5.vism.hska.de/">
+
+	<xs:element name="getFibonacci" type="tns:getFibonacci"></xs:element>
+
+	<xs:element name="getFibonacciResponse" type="tns:getFibonacciResponse"></xs:element>
+
+	<xs:complexType name="getFibonacci">
+		<xs:sequence>
+			<xs:element name="number" type="xs:int"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="getFibonacciResponse">
+		<xs:sequence>
+			<xs:element name="return" type="xs:int"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
