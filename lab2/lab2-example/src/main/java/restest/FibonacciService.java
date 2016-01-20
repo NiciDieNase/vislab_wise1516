@@ -8,16 +8,15 @@ import java.util.Map;
  * Created by felix on 03.12.15.
  */
 
-@Path("/fibonacci/")
+@Path("/fibonacci")
 public class FibonacciService {
 
-	final int[] initValues = {1,1};
-
-	Map<String,int[]> sessions = new HashMap<String,int[]>();
+	private Map<String,int[]> sessions = new HashMap<String,int[]>();
 
 	@POST @Produces("text/plain")
-	public void createSession(@QueryParam("sessionID") String sessionID){
+	public String createSession(@QueryParam("sessionID") String sessionID){
 		newSession(sessionID);
+		return "your session-ID: " + sessionID;
 	}
 
 	@GET @Produces("text/plain")
@@ -26,21 +25,31 @@ public class FibonacciService {
 		int newFib;
 		try {
 			numbers = sessions.get(sessionID);
+			System.out.println(sessionID + " " + numbers);
 			newFib = numbers[0] + numbers[1];
 			numbers[0] = numbers[1];
 			numbers[1] = newFib;
 			return newFib;
 		} catch (IndexOutOfBoundsException e){
 			// TODO session does not exist, return error
+		} catch (NullPointerException e){
+			e.printStackTrace();
 		}
 		return 0;
 	}
 
-	private void newSession(String sessionID) {
+	@DELETE
+	public void deleteSession(@QueryParam("sessionID") String sessionID){
 		if(sessions.containsKey(sessionID)){
 			sessions.remove(sessions.get(sessionID));
+			System.out.println("replacing existing session");
 		}
-		sessions.put(sessionID, initValues);
+	}
+
+	private void newSession(String sessionID) {
+		deleteSession(sessionID);
+		sessions.put(sessionID, new int[]{1, 1});
+		System.out.println("new session created: " + sessionID + " " + sessions.get(sessionID)[0] + " " + sessions.get(sessionID)[1]);
 	}
 
 
