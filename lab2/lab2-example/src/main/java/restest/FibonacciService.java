@@ -11,7 +11,7 @@ import java.util.Map;
 @Path("/fibonacci")
 public class FibonacciService {
 
-	private Map<String,int[]> sessions = new HashMap<String,int[]>();
+	private static Map<String,int[]> sessions = new HashMap<String,int[]>();
 
 	@POST @Produces("text/plain")
 	public String createSession(@QueryParam("sessionID") String sessionID){
@@ -19,37 +19,46 @@ public class FibonacciService {
 		return "your session-ID: " + sessionID;
 	}
 
+	@PUT
+	public void updateSession(
+			@QueryParam("a") int a,
+			@QueryParam("b") int b,
+			@QueryParam("sessionID") String sessionID){
+		if(a<b){
+			sessions.put(sessionID,new int[]{a,b});
+		} else {
+			sessions.put(sessionID,new int[]{b,a});
+		}
+	}
+
 	@GET @Produces("text/plain")
-	public int next(@QueryParam("sessionID") String sessionID){
+	public String next(@QueryParam("sessionID") String sessionID){
 		int[] numbers;
 		int newFib;
 		try {
 			numbers = sessions.get(sessionID);
-			System.out.println(sessionID + " " + numbers);
 			newFib = numbers[0] + numbers[1];
 			numbers[0] = numbers[1];
 			numbers[1] = newFib;
-			return newFib;
+			return Integer.toString(newFib);
 		} catch (IndexOutOfBoundsException e){
-			// TODO session does not exist, return error
+			// session does not exist
+			return "Session does not exist";
 		} catch (NullPointerException e){
 			e.printStackTrace();
 		}
-		return 0;
+		return "0";
 	}
 
 	@DELETE
-	public void deleteSession(@QueryParam("sessionID") String sessionID){
-		if(sessions.containsKey(sessionID)){
-			sessions.remove(sessions.get(sessionID));
-			System.out.println("replacing existing session");
-		}
+	public String deleteSession(@QueryParam("sessionID") String sessionID){
+		sessions.remove("sessionID");
+		return "removed " + sessionID;
 	}
 
 	private void newSession(String sessionID) {
 		deleteSession(sessionID);
 		sessions.put(sessionID, new int[]{1, 1});
-		System.out.println("new session created: " + sessionID + " " + sessions.get(sessionID)[0] + " " + sessions.get(sessionID)[1]);
 	}
 
 
